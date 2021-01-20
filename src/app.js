@@ -1,3 +1,4 @@
+const path=require('path');
 const express=require('express');
 const MongoDB = require('./utils') ;
 
@@ -27,10 +28,13 @@ const MongoDB = require('./utils') ;
 // )
 const app=express();
 
+const publicPath = path.join(__dirname,'../public') ;
 
-app.get('',(req,res)=>{
-    res.send('Welcome to MongoDB');
-});
+app.use(express.static(publicPath));
+
+
+
+
 
 app.get('/getByName',async (req,res)=>{
     const name=req.query.user ;
