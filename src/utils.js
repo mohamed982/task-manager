@@ -62,7 +62,7 @@ const databaseName="task-manager" ;
 
 
 //Adding single user
-let AddUser=async ({name,age,emai,phone}={},callback)=>{
+let AddUser=async ({name,age,email,phone}={},callback)=>{
   const MongoClient=new mongodb(connectionURL,{useNewUrlParser:true,useUnifiedTopology:true});
    try{
     const MongoClient=new mongodb(connectionURL,{useNewUrlParser:true,useUnifiedTopology:true});
@@ -72,7 +72,7 @@ let AddUser=async ({name,age,emai,phone}={},callback)=>{
     const result=await collection.insertOne({
       name,
       age,
-      emai,
+      email,
       phone
     });
      if(callback)
@@ -168,13 +168,43 @@ let GetUserByAge = async (max=100,min=0,callback)=>{
   }
 };
 
+const GetUserByEmail =async (email,callback)=>{
+  const client=new mongodb(connectionURL,{useNewUrlParser:true,useUnifiedTopology:true});
+  try{
+    const conn= await client.connect() ;
+    const allUsers = await client.db(databaseName).collection('users').find({}).toArray();
+    const reg=new RegExp(`^${email}`,'i') ;
+    users=allUsers.filter(u=>u.email && u.email.search(reg)>=0);
+    if(callback)
+     {
+       callback(undefined,{count:users.length , users});
+     }
+    else
+     {
+       return users ;
+     }
+  }catch(error){
+    if(callback)
+     {
+       callback({error:error.message}) ;
+     }
+     else
+      {
+        throw new Error({error :error.message}) ;
+      }
+  }finally{
+    await client.close();
+  }
+};
+
 
 module.exports={
   AddUser ,
   AddTasks ,
   GetUserName ,
   GetTasks ,
-  GetUserByAge
+  GetUserByAge,
+  GetUserByEmail
 };
 
 // var tasks =[
