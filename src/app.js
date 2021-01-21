@@ -2,38 +2,12 @@ const path=require('path');
 const express=require('express');
 const MongoDB = require('./utils') ;
 
-// MongoDB.AddUser(
-//      {name:'Lamia Mahmoud',
-//      age:36,
-//      emai:'lamia@gmail.com',
-//      phone:"01011001513"}
-//      ).then(result=>{
-//          console.log(result) ;
-//      }).catch(err=>{
-//          console.log(err);
-//      });
 
-// MongoDB.AddUser(
-//     {
-//         name:'Lamia Mahmoud',
-//         age:36 ,
-//         emai:'lamia@gmail.com',
-//         phone:"00201011001513"
-//     },
-//     (err,result)=>{
-//         if(err)
-//          return console.log(err.message);
-//         console.log(result) ;
-//     }
-// )
 const app=express();
 
 const publicPath = path.join(__dirname,'../public') ;
 
 app.use(express.static(publicPath));
-
-
-
 
 
 app.get('/getByName',async (req,res)=>{
