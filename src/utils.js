@@ -2,7 +2,7 @@ const mongodb=require('mongodb').MongoClient;
 const { argv, command } = require('yargs');
 const yargs=require('yargs');
 
-const connectionURL="mongodb://10.23.1.192:19820";
+const connectionURL="mongodb://localhost:27017";
 const databaseName="task-manager" ;
 
 //Adding single user
