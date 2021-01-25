@@ -111,7 +111,6 @@ let GetUserByAge = async (min,max)=>{
    const users=await client.db(databaseName).collection('users').find({
      age:{$lte:Max , $gte: Min}
    }).toArray();
-    console.log(users)
     return users ;
   }catch(error){
     throw new Error(error.message);
